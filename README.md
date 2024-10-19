@@ -1,6 +1,6 @@
 # chitin - dev
 
-This repository is a [chitin fiber](https://github.com/edobry/chitin#structure) containing a collection of helpers for software development.
+This repository is a [chitin fiber](https://github.com/edobry/chitin#structure) containing a collection of chains for software development.
 
 ## Dependencies
 
@@ -32,7 +32,7 @@ Functions:
 
 #### Configuration
 
-This chain leverages `dtSecret` for managing the Github PAT; add a section to your dtConfig with the name of the secret to use:
+This chain leverages `chiSecret` for managing the Github PAT; add a section to your chiConfig with the name of the secret to use:
 
 ```json
 {
