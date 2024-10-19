@@ -2,7 +2,7 @@ CHI_GITHUB_API_BASE_URL='https://api.github.com'
 
 function githubGetToken() {
     local secretName=$(chiReadChainnConfigField github secretName)
-    dtSecretGet "$secretName"
+    chiSecretGet "$secretName"
 }
 
 function githubMakeOrgUrl() {
