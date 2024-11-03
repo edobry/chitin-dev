@@ -17,3 +17,16 @@ function netTest() {
 
     echo 'QUIT' | netcatTimeout 5 "$1" "$2" >/dev/null
 }
+
+function netTailscaleCurrentNetwork() {
+    tailscale status --json | jq -r '.CurrentTailnet.Name'
+}
+function netTailscaleIsUp() {
+    [[ $(tailscale status --json | jq -r '.BackendState') == "Running" ]]
+}
+
+function netTailscaleSwitchAccount() {
+    requireArg "an account email" "$1" || return 1
+
+    tailscale switch "$1"
+}
