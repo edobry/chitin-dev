@@ -9,7 +9,7 @@ function sshTunnel() {
     local localPort="$1"
     local destinationHost="$2"
     local destinationPort="$3"
-    shift && shift && shift
+    shift; shift; shift
 
     echo "Opening tunnel from localhost:$localPort to $destinationHost:$destinationPort..."
     ssh -L $localPort:$destinationHost:$destinationPort -N $*
