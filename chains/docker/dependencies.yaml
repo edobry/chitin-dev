@@ -1,0 +1,19 @@
+tools:
+# containers
+  docker:
+    brew:
+      cask: true
+  jesseduffield/lazydocker/lazydocker:
+    optional: true
+    brew:
+      tap: jesseduffield/lazydocker
+  # layer explorer
+  dive:
+    brew: {}
+  # https://github.com/runfinch/finch
+  finch:
+    brew: {}
+# linux VMs
+  # https://lima-vm.io/
+  lima:
+    brew: {}
