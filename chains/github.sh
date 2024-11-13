@@ -5,6 +5,39 @@ function githubGetToken() {
     chiSecretGet "$secretName"
 }
 
+function githubGenerateAndAddSshKey() {
+    requireArg "an email" "$1" || return 1
+    requireArg "a Github token" "$2" || return 1
+
+    chiLog "generating ssh key..." "dev:github"
+    local keyPath=$(gitGenerateKey "$1")
+
+    chiLog "adding ssh key to Github..." "dev:github"
+    githubAddSshKey "$2" "$keyPath.pub" "$(uname -n)-cli"
+}
+
+function githubAddSshKey() {
+    requireArg "a Github token" "$1" || return 1
+    requireArg "a public key path" "$2" || return 1
+    requireArg "a key title" "$3" || return 1
+
+    local ghToken="$1"
+    local pubkeyPath="$2"
+    local keyTitle="$3"
+
+    local pubkey=$(cat "$pubkeyPath")
+
+    # GitHub API URL
+    local ghApiUrl="$CHI_GITHUB_API_BASE_URL/user/keys"
+
+    curl -L \
+        -X POST \
+        -H "Accept: application/vnd.github+json" \
+        -H "Authorization: Bearer $ghToken" \
+        --data "$(jq -n --arg title "$keyTitle" --arg key "$pubkey" '{ title: $title, key: $key }')" \
+        "$ghApiUrl"
+}
+
 function githubMakeOrgUrl() {
     requireArg 'an organization name' "$1" || return 1
 
