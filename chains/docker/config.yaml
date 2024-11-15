@@ -2,6 +2,7 @@ enabled: false
 tools:
 # containers
   docker:
+    checkCommand: true
     brew:
       cask: true
   jesseduffield/lazydocker/lazydocker:
@@ -18,3 +19,6 @@ tools:
   # https://lima-vm.io/
   lima:
     brew: true
+toolDeps:
+  - docker
+installToolDeps: true

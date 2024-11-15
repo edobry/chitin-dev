@@ -29,3 +29,32 @@ function dockerCheckImageExistsLocal() {
 
     docker image inspect $1:$2 >/dev/null 2>&1
 }
+
+function dockerGetCredentials() {
+    requireArg "a registry" "$1" || return 1
+
+    echo "$1" | docker-credential-osxkeychain get
+}
+
+function dockerCurl() {
+    requireArg "a registry domain" "$1" || return 1
+    requireArg "a url path" "$2" || return 1
+
+    local creds="$(dockerGetCredentials "$1")"
+    local username=$(jsonReadPath "$creds" Username)
+    local secret=$(jsonReadPath "$creds" Secret)
+
+    local auth="$([[ "$username" == "oauth2accesstoken" ]] \
+        && echo "-H 'Authorization: Bearer $secret'" \
+        || echo "-u $username:$secret")"
+
+    curl -s "$auth" "https://$1/v2/$2"
+}
+
+function dockerCurlListTags() {
+    requireArg "a registry domain" "$1" || return 1
+    requireArg "a repository name" "$2" || return 1
+    requireArg "an artifact name" "$3" || return 1
+
+    dockerCurl "$1" "$2/$3/tags/list" "$4:$5"
+}
