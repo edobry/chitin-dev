@@ -10,11 +10,11 @@ tools:
       tap: jesseduffield/lazydocker
   # layer explorer
   dive:
-    brew: {}
+    brew: true
   # https://github.com/runfinch/finch
   finch:
-    brew: {}
+    brew: true
 # linux VMs
   # https://lima-vm.io/
   lima:
-    brew: {}
+    brew: true
