@@ -1,7 +1,7 @@
 CHI_GITHUB_API_BASE_URL='https://api.github.com'
 
 function githubGetToken() {
-    local secretName=$(chiReadChainnConfigField github secretName)
+    local secretName=$(chiConfigChainReadField github secretName)
     chiSecretGet "$secretName"
 }
 
