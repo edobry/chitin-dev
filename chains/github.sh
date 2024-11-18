@@ -138,11 +138,21 @@ function githubOpenDirectory() {
 }
 
 function githubClone() {
-    requireArg 'a repository name' "$1" || return 1
+    requireArg 'an organization name' "$1" || return 1
+    requireArg 'a repository name' "$2" || return 1
 
-    pushd $CHI_PROJECT_DIR > /dev/null 2>&1
-    git clone git@github.com:$1.git
-    cd $1
+    local orgName="$1"
+    local repoName="$2"
+
+    local targetDir="$CHI_PROJECT_DIR${3:+/}${3}"
+
+    mkdir -p "$targetDir"
+
+    local repoDir="$targetDir/$repoName"
+
+    pushd "$targetDir" > /dev/null 2>&1
+    git clone git@github.com:${orgName}/${repoName}.git "$repoDir"
+    cd "$repoDir"
 }
 
 # lists comments on the given issue
