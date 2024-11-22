@@ -11,9 +11,7 @@ Optionally required:
 
 ## Setup
 
-1. Install the dependencies for the chains(s) you want to use (see docs below)
-2. Clone this repository to your `project dir` (the directory where you usually run `git clone`)
-3. Register this fiber with `chitin` [TBD]
+Clone this repository to your `project dir` (the directory where you usually run `git clone`).
 
 ## Chains
 

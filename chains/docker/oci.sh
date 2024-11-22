@@ -1,3 +1,9 @@
+function ociListRepos() {
+    requireArg "a registry url" "$1" || return 1
+
+    oras repo ls "$1"
+}
+
 function ociRepoList() {
     requireArg "a registry url" "$1" || return 1
     requireArg "a repository name" "$2" || return 1
@@ -10,7 +16,7 @@ function ociRepoListTags() {
     requireArg "a repository name" "$2" || return 1
     requireArg "an artifact name" "$3" || return 1
 
-    oras repo tags "$1/$2/$3"
+    oras repo tags --exclude-digest-tags "$1/$2/$3"
 }
 
 function ociRepoGetArtifactManifest() {
