@@ -21,4 +21,3 @@ tools:
     brew: true
 toolDeps:
   - docker
-installToolDeps: true
