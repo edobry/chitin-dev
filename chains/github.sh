@@ -154,8 +154,11 @@ function githubClone() {
 
     local repoDir="$targetDir/$repoName"
 
-    pushd "$targetDir" > /dev/null 2>&1
+    pushd "$targetDir" &>/dev/null
     git clone git@github.com:${orgName}/${repoName}.git "$repoDir"
+    [[ $? -ne 0 ]] && return 1
+    popd &>/dev/null
+    
     cd "$repoDir"
 }
 
