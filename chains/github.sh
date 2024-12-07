@@ -5,7 +5,7 @@ function githubCheckSsh() {
 }
 
 function githubGetToken() {
-    local secretName=$(chiConfigChainReadField github secretName)
+    local secretName=$(chiConfigUserReadField github secretName)
     chiSecretGet "$secretName"
 }
 
