@@ -1,0 +1,25 @@
+tools:
+  go:
+    brew: true
+  bison:
+    brew: true
+  mercurial:
+    checkCommand: hg
+    brew: true
+  gvm:
+    checkPath: README.md
+    git:
+      url: https://github.com/moovweb/gvm.git
+      target: ~/.gvm
+    postInstall: mv "$HOME/.gvm/.git" "$HOME/.gvm/git.bak"
+    setEnv:
+      GVM_ROOT: target
+    sourceScript: scripts/gvm-default
+  golangci-lint:
+    brew: true
+toolDeps:
+  - go
+  - golangci-lint
+  - bison
+  - mercurial
+  - gvm

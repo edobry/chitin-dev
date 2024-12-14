@@ -1,0 +1,19 @@
+tools:
+  nvm:
+    checkPath: nvm.sh
+    git:
+      url: https://github.com/nvm-sh/nvm.git
+      target: xdghome/.nvm
+    sourceScript: nvm.sh
+  fnm:
+    brew: true
+    addToPath:
+      - localshare/fnm
+    completionCommand: fnm completions --shell zsh
+    evalCommand: fnm env --use-on-cd
+  yarn:
+    brew: true
+toolDeps:
+  - nvm
+  - fnm
+  - yarn
