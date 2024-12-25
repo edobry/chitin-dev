@@ -13,6 +13,8 @@ tools:
     evalCommand: fnm env --use-on-cd
   yarn:
     brew: true
+    addToPath:
+      - ~/.yarn/bin
 toolDeps:
   - nvm
   - fnm
