@@ -1,6 +1,6 @@
 tools:
   just:
     brew: true
-  completionCommand: just --completions
+    completionCommand: just --completions
 toolDeps:
   - just
