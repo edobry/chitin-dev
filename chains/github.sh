@@ -5,7 +5,7 @@ function githubCheckSsh() {
 }
 
 function githubGetToken() {
-    local secretName=$(chiConfigUserRead dev github secretName)
+    local secretName=$(chiConfigUserReadModule dev github secretName)
     chiSecretGet "$secretName"
 }
 
@@ -13,10 +13,10 @@ function githubGenerateAndAddSshKey() {
     requireArg "an email" "$1" || return 1
     requireArg "a Github token" "$2" || return 1
 
-    chiLog "generating ssh key..." "dev:github"
+    chiLogInfo "generating ssh key..." dev github
     local keyPath=$(gitGenerateKey "$1")
 
-    chiLog "adding ssh key to Github..." "dev:github"
+    chiLogInfo "adding ssh key to Github..." dev github
     githubAddSshKey "$2" "$keyPath.pub" "$(uname -n)-cli"
 }
 

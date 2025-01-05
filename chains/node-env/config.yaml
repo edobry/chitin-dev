@@ -9,7 +9,7 @@ tools:
     brew: true
     addToPath:
       - localshare/fnm
-    completionCommand: fnm completions --shell zsh
+    completionCommand: fnm completions --shell
     evalCommand: fnm env --use-on-cd
   yarn:
     brew: true
