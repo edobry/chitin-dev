@@ -30,3 +30,9 @@ function netTailscaleSwitchAccount() {
 
     tailscale switch "$1"
 }
+
+function netFreePort() {
+    requireArg "a port number" "$1" || return 1
+
+    kill $(lsof -t -i ":$1")
+}
