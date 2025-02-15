@@ -1,6 +1,14 @@
 tools:
   go:
     brew: true
+    addToPath:
+      - ~/go/bin
+  goimports:
+    checkCommand: true
+    command: go install golang.org/x/tools/cmd/goimports@latest
+  gofumpt:
+    checkCommand: true
+    command: go install mvdan.cc/gofumpt@latest
   bison:
     brew: true
   mercurial:
