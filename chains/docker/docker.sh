@@ -33,7 +33,24 @@ function dockerCheckImageExistsLocal() {
 function dockerGetCredentials() {
     requireArg "a registry" "$1" || return 1
 
-    echo "$1" | docker-credential-osxkeychain get
+    local config="$(jsonReadFile $HOME/.docker/config.json)"
+
+    local auth="$(jq -r --arg registry "$1" '.auths[$registry] // empty' <<< "$config")"
+
+    # Check if registry is in "auths"
+    if [[ -n "$auth" ]]; then
+        echo "$auth" | base64Decode
+        return
+    fi
+
+    local helper="$(jq -r --arg registry "$1" '.credHelpers[$registry] // .credsStore // empty' <<< "$config")"
+    
+    if [[ -n "$helper" ]]; then
+        echo "$1" | docker-credential-${helper} get | jq -c
+    else
+        echo "No credentials found for $registry in Docker config."
+        return 1
+    fi
 }
 
 function dockerCurl() {
@@ -44,11 +61,14 @@ function dockerCurl() {
     local username=$(jsonReadPath "$creds" Username)
     local secret=$(jsonReadPath "$creds" Secret)
 
-    local auth="$([[ "$username" == "oauth2accesstoken" ]] \
-        && echo "-H 'Authorization: Bearer $secret'" \
-        || echo "-u $username:$secret")"
+    local auth=()
+    if [[ "$username" == *"token"* ]]; then
+        auth=(-H "Authorization: Bearer $secret")
+    else
+        auth=(-u "$username:$secret")
+    fi
 
-    curl -s "$auth" "https://$1/v2/$2"
+    curl -s "${auth[@]}" "https://$1/v2/$2"
 }
 
 function dockerCurlListTags() {
